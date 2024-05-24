@@ -66,7 +66,6 @@ hypr_package=(
   libqt5-qtquickcontrols2
   libqt5-qtgraphicaleffects
   rofi-wayland
-  sddm
   slurp
   SwayNotificationCenter
   swappy

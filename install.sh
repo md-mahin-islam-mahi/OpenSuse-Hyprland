@@ -93,9 +93,9 @@ read -n1 -rep "Select: " CFG
 printf " \n"
 
 ## Config sddm theme
-printf "${note} - Would you like to config sddm theme? [ y/n ]\n"
-read -n1 -rep "Select: " SDDM_CFG
-printf " \n"
+# printf "${note} - Would you like to config sddm theme? [ y/n ]\n"
+# read -n1 -rep "Select: " SDDM_CFG
+# printf " \n"
 
 ## Install zsh, oh-my-zsh and powerleven10k theme
 printf "${note} - Would like to install zsh, oh-my-zsh and powerlevel10k theme on your system? If not, then we will customize your Default Bash [ y/n ]\n"
@@ -131,6 +131,7 @@ if [[ $INST_PKGS == "Y" || $INST_PKGS == "y" ]]; then
     "$install_script_dir/3-hypr_pkgs.sh"  # Main packages
     "$install_script_dir/4-cliphist.sh"  # Main packages
     "$install_script_dir/5-fonts.sh"      # fonts
+    "$install_script_dir/sddm.sh"       # setup
 
     if [[ $bluetooth == "y" || $bluetooth == "Y" ]]; then
         "$install_script_dir/bluetooth.sh"  # install and setup bluetooth
@@ -163,12 +164,12 @@ fi
 
 
 # Set SDDM Theme
-if [[ $SDDM_CFG == "y" || $SDDM_CFG == "Y" ]]; then
-    "$install_script_dir/sddm.sh"
-else
-    printf "${error} - Setting up the SDDM theme cancled\n"
-    printf "[ ERROR ] - Setting up the SDDM theme cancled\n" 2>&1 | tee -a "$log" &>> /dev/null
-fi
+# if [[ $SDDM_CFG == "y" || $SDDM_CFG == "Y" ]]; then
+#     "$install_script_dir/sddm.sh"
+# else
+#     printf "${error} - Setting up the SDDM theme cancled\n"
+#     printf "[ ERROR ] - Setting up the SDDM theme cancled\n" 2>&1 | tee -a "$log" &>> /dev/null
+# fi
 
 clear
 
@@ -203,14 +204,14 @@ else
 fi
 
 # setting graphical interface
-printf "${note} - Enabling the SDDM Service...\n"
-sudo systemctl set-default graphical.target 2>&1 | tee -a "$log" &>> /dev/null
-sudo systemctl enable sddm.service 2>&1 | tee -a "$log" &>> /dev/null
-sleep 2
+# printf "${note} - Enabling the SDDM Service...\n"
+# sudo systemctl set-default graphical.target 2>&1 | tee -a "$log" &>> /dev/null
+# sudo systemctl enable sddm.service 2>&1 | tee -a "$log" &>> /dev/null
+# sleep 2
 
 clear
 
-printf "${done} - installation completed, would you like to rebooting your system...[ y/n ]\n"
+printf "${done} - installation completed, it will be good if you reboot first. Would you like to? [ y/n ]\n"
 read -p "Select: " REBOOT
 
 if [[ $REBOOT == "Y" || $REBOOT == "y" ]]; then
@@ -218,7 +219,8 @@ if [[ $REBOOT == "Y" || $REBOOT == "y" ]]; then
     sleep 1
     reboot
 else
-    exit 1
+    printf "${action} - Well, Starting ${cyan}Hyprland ${end}here...\n" && sleep 2
+    Hyprland
 fi
 
 ############## Script exits here ################
